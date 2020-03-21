@@ -5,58 +5,114 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="00-js中的一等公民函数.js">
+    <form action="00-js中的一等公民函数.js" id="user_form">
+        
+    </form>
+
+    <script type="text/template" id="tpl">
         <div>
             <label>用户名</label>
-            <section id="username" name="username">
-                <option value="学生"></option>
-                <option value="老师"></option>
-                <option value="司机"></option>
-                <option value="画家"></option>
-                <option value="演员"></option>
-            </section>
+            <input type="text" value="{{ user.username }}">
+        </div>
+        <div>
+            <label>年龄</label>
+            <input type="text" value="{{ user.age }}">
         </div>
         <div>
             <label>职业</label>
             <section id="job" name="job">
-                <option value="学生"></option>
-                <option value="老师"></option>
-                <option value="司机"></option>
-                <option value="画家"></option>
-                <option value="演员"></option>
+                {{ each jobs }}
+                    {{ if user.job === $value.id }}
+                        <option value="{{ $value.id }}" selected>{{ $value.name }}</option>
+                    {{ else }}
+                        <option value="{{ $value.id }}" selected>{{ $value.name }}</option>
+                    {{ /if }}
+                {{ /each }}
             </section>
         </div>
-        <div>
-            <label>年龄</label>
-            <input type="text" value="12">
-        </div>
-    </form>
-
-    <script type="text/template" id="tpl">
-        
     </script>
-
+    <script src="node_modules/art-template/lib/template-web.js"></script>
+    <script src="node_modules/jquery/dist//jquery.js"></script>
     <script>
         // 用户表
         //  其中一个接口获取用户数据
         //  职业：1
         // 职业信息表
-        //  其中一个接口获取所有的职业信息
-        get('http://localhost:3000/users/4', function(data) {
-            //console.log(data)
-            data = data.JSON.parse(data)
-        })
+        //  其中一个接口获取所有的职业信息(使用自己写的Ajax get方法)
+        // get('http://localhost:3000/users/3', function(userData) {
+        //     //console.log(data)
+        //     get('http://localhost:3000/jobs', function(jobsData) {
+        //         //console.log(userData, jobsData)
+        //         var htmlStr = template('tpl', {
+        //             user: JSON.parse(userData),
+        //             jobs: JSON.parse(jobsData)
+        //         })
+        //         //console.log(htmlStr)
+        //         document.querySelector("#user_form").innerHTML(htmlStr)
+        //     })
+        // })
 
-        function get(url, callback) {
-            var xhr = new XMLHttpRequest()
-            // 当请求加载成功之后要调用指定的函数
-            xhr.onload = function() {
-                //我现在需要得到这里的 xhr.responseText
-                console.log(xhr.responseText)
-                callback(xhr.responseText)
-            }
-            xhr.open('get', url, true)
-            xhr.send()
+        //jquery支持Promise
+        // var data = {}
+        // $.get('http://localhost:3000/users/3')
+        //     .then(function(user) {
+        //         data.user = user
+        //         return $.get('http://localhost:3000/jobs')
+        //     })
+        //     .then(function(jobs) {
+        //         data.jobs = jobs
+        //         var htmlStr = template('tpl', data)
+        //         console.log(htmlStr)
+        //         document.querySelector("#user_form").innerHTML(htmlStr)
+        //     })
+
+        //这个 get 是 callback 方式的 API
+        //可以使用 Permise 来解决这个问题
+        // function get(url, callback) {
+        //     var xhr = new XMLHttpRequest()
+        //     // 当请求加载成功之后要调用指定的函数
+        //     xhr.onload = function() {
+        //         //我现在需要得到这里的 xhr.responseText
+        //         console.log(xhr.responseText)
+        //         callback(xhr.responseText)
+        //     }
+        //     xhr.open('get', url, true)
+        //     xhr.send()
+        // }
+
+        //改造pGet以后，既可以用then的方式也可以callback
+        var data = {}
+        pGet('http://localhost:3000/users/3')
+            .then(function(user) {
+                data.user = user
+                return pGet('http://localhost:3000/jobs')
+            })
+            .then(function(jobs) {
+                data.jobs = jobs
+                var htmlStr = template('tpl', data)
+                document.querySelector("#user_form").innerHTML(htmlStr)
+            })
+
+        // pGet('http://localhost:3000/users/3', function(data) {
+        //     console.log(data)
+        // })
+
+        //改造 get 方法，使它支持 Promise
+        function pGet(url,callback) {
+            return new Promise(function(resolve, reject) {
+                var xhr = new XMLHttpRequest()
+                // 当请求加载成功之后要调用指定的函数
+                xhr.onload = function() {
+                    //我现在需要得到这里的 xhr.responseText
+                    callback && callback(JSON.parse(xhr.responseText))
+                    resolve(xhr.responseText)
+                }
+                xhr.onerror = function(err) {
+                    reject(err)
+                }
+                xhr.open('get', url, true)
+                xhr.send()
+            })
         }
     </script>
 </body>

@@ -1,10 +1,12 @@
 # promise
 
+参考文档：http://es6.ruanyifeng.com/#docs/promise
+
 callback hell（回调地狱）：
 
 
 
-![回调地狱](D:\software\nodejs_learn\3_promise\README.assets\u=298094450,3512000574&fm=15&gp=0.jpg)
+![回调地狱](https://github.com/itdh/Node.JS/raw/master/3_promise/README.assets/u%3D298094450%2C3512000574%26fm%3D15%26gp%3D0.jpg)
 
 
 
@@ -90,7 +92,7 @@ fs.readFile('./data/a.txt', 'UTF8', function(err, data) {
 
 - Promise 的英文就是承诺、保证的意思（I promise you）
 
-![](D:\software\nodejs_learn\3_promise\README.assets\promise概念.png)
+![](https://raw.githubusercontent.com/itdh/Node.JS/master/3_promise/README.assets/promise概念.png)
 
 ## Promise基本语法：
 
@@ -138,7 +140,7 @@ p1.then(function(data) {
 })
 ```
 
-![](D:\software\nodejs_learn\3_promise\README.assets\PromiseAPI代码图示.PNG)
+![](https://github.com/itdh/Node.JS/raw/master/3_promise/README.assets/PromiseAPI代码图示.PNG)
 
 
 
@@ -201,7 +203,7 @@ p1
     })
 ```
 
-![](D:\software\nodejs_learn\3_promise\README.assets\Promise-API.PNG)
+![](https://github.com/itdh/Node.JS/raw/master/3_promise/README.assets/Promise-API.PNG)
 
 
 
