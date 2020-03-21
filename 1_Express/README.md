@@ -288,7 +288,7 @@ exports.delete = function() {
 - 路由设计
 - 提取路由模块
 - 由于接下来一系列的业务操作都需要处理文件数据，所以我们需要封装 student.js
-- 先写好 student.ks 文件结构
+- 先写好 student.js 文件结构
   - 查询所有学生列表的 API find
   - findById
   - save
