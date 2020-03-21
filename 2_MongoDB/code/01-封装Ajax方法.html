@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 常见的异步函数
+        // setTimeout
+        // readFile
+        // writeFile
+        // readdir
+        // ajax
+        // 往往异步 API 都伴随着一个回调函数
+        // var ret = fn()
+        // $.get('aaa', function() {})
+        // var ret = $.get()这样是得不到返回值的
+
+        // var xhr = new XMLHttpRequest()
+        // // 当请求加载成功之后要调用指定的函数
+        // xhr.onload = function() {
+        //     console.log(xhr.responseText)
+        // }
+        // xhr.open('get', 'data.json', true)
+        // xhr.send()
+
+        function get(url, callback) {
+            var xhr = new XMLHttpRequest()
+            // 当请求加载成功之后要调用指定的函数
+            xhr.onload = function() {
+                //我现在需要得到这里的 xhr.responseText
+                console.log(xhr.responseText)
+                callback(xhr.responseText)
+            }
+            xhr.open('get', url, true)
+            xhr.send()
+        }
+
+        // 通过回调函数得到 xhr.responseText 的内容
+        get('data.json', function(data) {
+            console.log(data)
+        })
+    </script>
+</body>
+</html>
