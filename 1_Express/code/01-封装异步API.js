@@ -13,3 +13,4 @@ function fn(callback) {
 fn(function(data) {
 	console.log(data)
 })
+
