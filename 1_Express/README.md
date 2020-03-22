@@ -65,7 +65,35 @@ app.use('/static', express.static('public'))
 app.use('/static', express.static(path.join(__dirname, 'pbulic')))
 ```
 
-
+> - path.join() 拼接路径，得到的是绝对路径 , `__dirname` 可以用来获取当前文件模块所属目录的绝对路径
+>
+> - path.basename
+>   - 获取一个路径的文件名（默认包含扩展名，可以加第二个参数文件后缀名，这样得到的就是不包含扩展名的文件名）
+> - path.dirname
+>   - 获取一个路径中的目录部分
+> - path.extname
+>   - 获取一个路径中的扩展名部分
+> - path.parse
+>   - 把一个路径转换为对象
+>     - root根路径
+>     - dir目录
+>     - base包含后缀名的文件名
+>     - ext后缀名
+>     - name不包含后缀名的文件名
+>
+> 
+>
+> Node中的其他成员
+>
+> 在每个模块中, 除了 `require`  `export` 等模块相关API之外,还有两个特殊的成员
+>
+> - `__dirname` 可以用来获取当前文件模块所属目录的绝对路径
+> - `__filename` 可以用来获取当前文件的绝对路径
+> - `dirname` 和 `filename` 是不受执行 node 命令所属路径影响的
+>
+> 在文件操作中,使用相对路径是不可靠的,因为在Node中文件操作的路径被设计为相对于执行node命令所处的路径.
+>
+> 所以为了解决这个问题,很简单,只需要把相对路径变为绝对路径就可以了
 
 ## 2.在Express中配置使用 `art-template` 模板引擎
 

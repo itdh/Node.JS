@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+    <!-- 留坑让其他页面引入自己的样式 -->
+    {{ block 'head'}}
+    {{ /block }}
+</head>
+<body>
+    {{ include './header.html' }}
+
+    <!-- 挖一个坑，留给其他页面去填 -->
+    {{ block 'content' }}
+        <div>
+            <h1>默认内容</h1>
+        </div>
+    {{ /block}}
+
+    {{ include './footer.html' }}
+    <script src="../node_modules/jquery/dist/jquery.js"></script>
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <!-- 留坑让其他页面引入自己的样式 -->
+    {{ block 'script'}}
+    {{ /block }}
+</body>
+</html>
